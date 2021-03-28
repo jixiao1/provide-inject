@@ -1,28 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <input type="text" ref="in">
+    <button @click="clickHandler">添加</button>
+    <Wrap></Wrap>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Wrap from './components/Wrap.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    [Wrap.name]: Wrap
+  },
+  data () {
+    return {
+      list: [1, 2, 3]
+    }
+  },
+  provide () {
+    return {
+      message: 'hello world',
+      data: this.list
+    }
+  },
+  methods: {
+    clickHandler () {
+      if (this.$refs.in.value) {
+        this.list.push(this.$refs.in.value)
+        this.$refs.in.value = ''
+      }
+    }
   }
 }
 </script>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
